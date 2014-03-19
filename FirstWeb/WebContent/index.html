@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Canvas 연습</title>
+<style type="text/css">
+#myCanvas {
+	border: 1px solid gray;
+}
+</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="500" height="500"></canvas>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var context = canvas.getContext('2d');
+		var onDrawing = false;
+		var prevX;
+		var prevY;
+		var color;
+		canvas.addEventListener("mousemove", function(e) {
+
+			var x = (e.clientX - this.offsetLeft);
+			var y = (e.clientY - this.offsetLeft);
+
+			if (onDrawing) {
+				context.beginPath();
+				context.moveTo(prevX, prevY);
+				context.lineTo(x, y);
+				context.lineWidth = 5;
+				context.strokeStyle=color;
+				context.stroke();
+			}
+			prevX = x;
+			prevY = y;
+		})
+		canvas.addEventListener("mouseup", function() {
+			onDrawing = false;
+		})
+		canvas.addEventListener("mousedown", function() {
+			onDrawing = true;
+		})
+		function selectColor(selectedColor){
+			switch(selectedColor){
+			case 'red':
+				color='#FF0000';
+				break;
+			case 'yellow':
+				color='#FFE400';
+				break;
+			case 'green':
+				color='#ABF200';
+				break;
+			case 'blue':
+				color='#00D8FF';
+				break;
+			}
+		}
+		
+	</script>
+	<button onclick="selectColor('red');">빨간색</button>
+	<button onclick="selectColor('yellow');">노란색</button>
+	<button onclick="selectColor('green');">초록색</button>
+	<button onclick="selectColor('blue');">파란색</button>
+
+</body>
+</html>
